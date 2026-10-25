@@ -4,7 +4,7 @@
 
 $ErrorActionPreference = "Stop"
 $Version = "2.0.2"
-$Repo = "NoahKahenge/noahlang-debugger"
+$Repo = "NoahKahenge/NOAHLANG"
 
 Write-Host ""
 Write-Host "  NoahLang installer" -ForegroundColor Cyan
