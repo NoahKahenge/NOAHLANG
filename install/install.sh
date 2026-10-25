@@ -6,7 +6,7 @@
 set -e
 
 VERSION="2.0.2"
-REPO="NoahKahenge/noahlang-debugger"
+$Repo = "NoahKahenge/NOAHLANG"
 
 echo ""
 echo "  NoahLang installer"
