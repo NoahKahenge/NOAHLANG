@@ -2,7 +2,7 @@
 
 Syntax highlighting, snippets, and language support for **NoahLang** — a small, indentation-based teaching language.
 
-> **Interpreter:** v1.1.0 · **Extension:** 0.1.0
+> **Interpreter:** v2.0.7 · **Extension:** 0.1.0
 
 ## Features
 
