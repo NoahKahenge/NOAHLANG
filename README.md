@@ -2,7 +2,7 @@
 
 ### A General-Purpose Programming Language Built in Zambia 🇿🇲
 
-**NoahLang is a general-purpose programming language created in Zambia by Noah Kahenge.** It is designed around readable, English-inspired syntax, explicit block structures, and an extensible library system.
+**NoahLang is an open source, general-purpose programming language created in Zambia by Noah Kahenge.** It is designed around readable, English-inspired syntax, explicit block structures, and an extensible library system.
 
 Like Python, C++, Java, and Ruby, NoahLang provides programming constructs for developing software, processing data, automating tasks, and solving real-world problems. It includes variables, functions, closures, loops, records, lists, ranges, imports, and error handling.
 
