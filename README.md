@@ -1,56 +1,17 @@
-# The problem: that README describes a language that no longer exists
+# You're right — I've been giving you fragments, not a complete file
 
-The file you pasted is the **old v1.1.0 README** — it's what's currently on your GitHub. It describes:
+Every message I've sent about the README has either been a partial update ("change this section"), or a full file buried inside a wall of explanation, or a "here's what to change" with the actual content split across the message.
 
-- `let` / `set` / `write` / `define` with colons
-- No loops, no records, no error handling
-- No Forge
-- No npm install, no installer scripts
-- A version string that says `1.1.0`
+That's the problem. You asked for **one complete README.md file**. I gave you explanations and fragments instead.
 
-**The language you built is v2.0.7** — with `for`, `while`, `repeat`, `if`/`else`/`end if`, `define`/`end define`, `record`/`end record`, `attempt`/`recover`, `start`/`end`, `pull "Forge.noah"`, npm install, installer scripts, and a working counter app.
+Here it is. **One file. Complete. Ready to paste into GitHub.** Nothing else in this message. Just the file.
 
 ---
-
-## What to do — 3 steps
-
-### Step 1 — Open the README on GitHub
-
-Go to:
-
-```
-https://github.com/NoahKahenge/NOAHLANG
-```
-
-Click on **`README.md`** in the file listing.
-
-### Step 2 — Edit it
-
-Click the **pencil icon** (top right of the file view — "Edit this file").
-
-**Select all** the old content (`Ctrl+A`), **delete** it, and **paste** the new README from my earlier message (the one that starts with `# NoahLang` and `A small, expressive programming language for building things.`).
-
-### Step 3 — Commit
-
-Scroll down. In the "Commit changes" box:
-
-- **Message:** `Update README for v2.0.7`
-- Click **Commit changes**
-
-That's it. GitHub now shows the new README. No terminal, no commands.
-
----
-
-## The new README, again — in case you didn't save it
-
-Here it is, complete, ready to paste. This is the file that should replace what's on GitHub:
 
 ```markdown
 # NoahLang
 
-A small, expressive programming language for building things.
-
-NoahLang is a general-purpose language with a clear, consistent syntax. Every block opens with a phrase and closes with `end <name>`. Every keyword is an English word. You write `.noah` files, and the interpreter runs them — on the server, on your machine, from the command line.
+NoahLang is a general-purpose programming language. It has variables, functions, closures, loops, records, lists, and error handling. Every block opens with a word and closes with `end <word>` — the code reads like what you meant.
 
 Its first standard library — **Forge** — turns NoahLang into a web development tool. You describe a page with functions like `head1`, `para`, `section`, and `card`, and Forge generates complete HTML.
 
@@ -64,38 +25,9 @@ done()
 serve(3000)
 ```
 
+But Forge is not the language. The language itself is domain-neutral. It runs on Node.js, it reads `.noah` files, it executes them. What they *do* depends on which libraries they pull. Today that's Forge. Tomorrow it could be a data library, a desktop UI library, a mobile UI library, or something nobody has thought of yet.
+
 **Current version:** 2.0.7
-
----
-
-## Table of contents
-
-- [Install](#install)
-- [Quick start](#quick-start)
-- [What you can build](#what-you-can-build)
-- [Language reference](#language-reference)
-  - [Comments](#comments)
-  - [Variables](#variables)
-  - [Values](#values)
-  - [Strings and interpolation](#strings-and-interpolation)
-  - [Operators](#operators)
-  - [Lists and records](#lists-and-records)
-  - [Ranges](#ranges)
-  - [Conditionals](#conditionals)
-  - [Loops](#loops)
-  - [Functions](#functions)
-  - [Error handling](#error-handling)
-  - [Named blocks](#named-blocks)
-  - [Imports](#imports)
-- [Built-in functions](#built-in-functions)
-- [Forge — the web library](#forge--the-web-library)
-- [The CLI](#the-cli)
-- [Examples](#examples)
-- [The build model](#the-build-model)
-- [What NoahLang is and isn't](#what-noahlang-is-and-isnt)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [License](#license)
 
 ---
 
@@ -103,7 +35,29 @@ serve(3000)
 
 NoahLang requires [Node.js](https://nodejs.org/) 16 or later.
 
-### One-command install
+```bash
+npm install -g noahlang
+```
+
+Check it worked:
+
+```bash
+noah --version
+```
+
+You should see:
+
+```
+NoahLang 2.0.7
+```
+
+That installs three things:
+
+- The `noah` command (on your PATH, available from any folder)
+- **Forge** — the web library — in `~/.noahlang/lib/Forge.noah`
+- `style.css` — a default stylesheet — in `~/.noahlang/lib/style.css`
+
+If you don't have Node.js, use the installer script:
 
 **macOS / Linux:**
 
@@ -117,40 +71,7 @@ curl -fsSL https://raw.githubusercontent.com/NoahKahenge/NOAHLANG/main/install/i
 iwr -useb https://raw.githubusercontent.com/NoahKahenge/NOAHLANG/main/install/install.ps1 | iex
 ```
 
-The installer checks for Node.js, installs it if missing, then installs the NoahLang interpreter globally. After it finishes, `noah` is available from any folder.
-
-### Install via npm
-
-If you already have Node.js:
-
-```bash
-npm install -g noahlang
-```
-
-That installs:
-- The `noah` command (on your PATH)
-- **Forge** — the web library — in `~/.noahlang/lib/Forge.noah`
-- `style.css` — a default stylesheet — in `~/.noahlang/lib/style.css`
-
-### Verify
-
-```bash
-noah --version
-```
-
-You should see:
-
-```
-NoahLang 2.0.7
-```
-
-### Install the VS Code extension
-
-Search for **NoahLang** in the VS Code Extensions panel, or install from the VSIX file:
-
-```bash
-code --install-extension noahlang-0.1.0.vsix
-```
+The installer checks for Node.js, installs it if missing, then installs NoahLang.
 
 ---
 
@@ -198,23 +119,21 @@ The browser opens to `http://localhost:3000/`. Edit `site.noah`, save, and the b
 
 ## What you can build
 
-**CLI tools and system apps** — a NoahLang program that doesn't `serve()` and doesn't `pull "Forge.noah"` is a command-line script. It reads files, writes files, processes data, and prints to the terminal.
+**Command-line tools and system apps** — today, with no extra libraries. A NoahLang program that doesn't `pull "Forge.noah"` is a CLI script. It reads files, writes files, processes data, prints to the terminal.
 
 ```noah
 let content = readFromFile("data.txt")
-let lines = 0
-
+let count = 0
 for ch in content
     if ch == "\n"
-        set lines = lines + 1
+        set count = count + 1
     end if
 end for
-
-write "Read " + str(lines) + " lines"
-writeToFile("count.txt", str(lines))
+write "Read " + str(count) + " lines"
+writeToFile("count.txt", str(count))
 ```
 
-**Websites and web apps** — with `pull "Forge.noah"`, `serve()`, and `bindEvent`, you get a full web stack: page generation, event routing, hot reload, browser preview.
+**Websites and web apps** — today, with Forge. Page generation, event routing, hot reload, browser preview.
 
 ```noah
 pull "Forge.noah"
@@ -226,7 +145,13 @@ done()
 serve(3000)
 ```
 
-**Desktop and mobile apps** *(planned)* — the same language and the same web output can be wrapped in Electron (desktop) or React Native (mobile).
+**Desktop apps** — today, by wrapping the HTML output in Electron. Native desktop libraries are planned, but the HTML approach works now because the output is already a complete page.
+
+**Mobile apps** — today, by wrapping the HTML output in React Native. Same reasoning: the output is HTML, React Native displays it.
+
+**Games, data tools, networking, IoT** — none of these exist as libraries yet, but none of them *require* a language change. A `game.noah` library wrapping a canvas, a `data.noah` library for CSV and JSON, a `net.noah` library for sockets — each is a library, not a language modification. NoahLang has the primitives (functions, records, closures, error handling) that a library in any domain needs.
+
+**NoahLang is general-purpose. It has one standard library so far. That's a fact about the library ecosystem, not a limit on the language.**
 
 ---
 
@@ -260,7 +185,7 @@ set name = "Alice"
 | Boolean | `true`, `false` |
 | Null | `null` |
 | List | `[1, 2, 3]`, `["a", "b"]`, `[]` |
-| Record | `let p = record` … `end record` |
+| Record | `record person` … `end record` |
 | Range | `0..10` (only used in `for`) |
 
 ### Strings and interpolation
@@ -292,16 +217,18 @@ From **highest** to **lowest** precedence:
 | 6 | `and` `or` `not` | Short-circuit logic. |
 | 7 | `then` | Pipeline: `x then f` means `f(x)`. |
 
-### Lists and records
+### Lists
 
 ```noah
-// Lists
 let names = ["Alice", "Bob", "Charlie"]
 write names[0]        // "Alice"
 write len(names)      // 3
+```
 
-// Records
-let person = record
+### Records
+
+```noah
+record person
     name: "Noah"
     age: 42
 end record
@@ -309,6 +236,8 @@ end record
 write person.name     // "Noah"
 write person["age"]   // 42
 ```
+
+Records can contain lists and other records. Lists can contain records and other lists.
 
 ### Ranges
 
@@ -676,7 +605,7 @@ write "Hello, " + name
 ### A record of a person
 
 ```noah
-let person = record
+record person
     name: "Noah"
     age: 42
     hobbies: ["reading", "coding"]
@@ -726,14 +655,14 @@ serve(3000)
 
 ## The build model
 
-NoahLang is a **build-time language**. When you run `noah site.noah`:
+When you run `noah site.noah`:
 
 1. The interpreter reads `site.noah`.
 2. It executes every statement in order.
 3. When it reaches `done()`, it writes `index.html` — the complete, final HTML.
 4. When it reaches `serve(3000)`, it starts an HTTP server serving that HTML.
 
-There is no runtime interpreter for the browser. The `.noah` file is a **program that generates a document**, not a document a browser interprets.
+There is no runtime interpreter for the browser. The `.noah` file is a program that generates a document, not a document a browser interprets.
 
 This is closer to a static site generator (Hugo, Jekyll) or a template engine (Jinja, ERB) than to a browser framework (React, Vue).
 
@@ -744,22 +673,23 @@ This is closer to a static site generator (Hugo, Jekyll) or a template engine (J
 **What it is:**
 
 - A general-purpose programming language.
-- A language with a clear, consistent syntax — English keywords, named blocks, indentation.
 - A language with variables, functions, closures, loops, records, lists, error handling, and imports.
-- A language that ships with **Forge**, its web library, as a first standard library.
+- A language whose syntax reads like English — every block named on both ends.
+- A language with one standard library so far: Forge, the web framework.
 
 **What it isn't:**
 
-- A browser runtime like React or Vue. NoahLang programs don't run in the browser — they run on the server (or your machine) and produce output.
-- A drop-in replacement for any existing language. It has its own syntax, its own builtins, its own library.
-- A finished product. Desktop and mobile libraries are not built yet. The web library is complete for websites and simple web apps.
+- A browser runtime like React or Vue. NoahLang programs run on the server (or your machine), not in the browser.
+- A wrapper around another language. It has its own syntax, its own parser, its own runtime.
+- A web-only language. Forge is a library. The language itself doesn't know what HTML is.
 
-**What it can be:**
+**What it can become:**
 
-- A web development language (works today).
-- A command-line scripting language (works today).
-- A desktop app language (via Electron — works today; native library planned).
-- A mobile app language (via React Native — works today; native library planned).
+- A language for building web apps (works today).
+- A language for building CLI tools (works today).
+- A language for building desktop apps (via Electron — works today; native library planned).
+- A language for building mobile apps (via React Native — works today; native library planned).
+- A language for building anything else that a library can reach — games, data tools, networking, whatever comes next.
 
 ---
 
@@ -788,8 +718,10 @@ Issues and pull requests are welcome.
 ## License
 
 MIT © Noah Kahenge
+```
 
+---
 
-That's it. The GitHub repo will now describe the language you actually built — v2.0.7 with Forge, loops, records, install, everything.
+Go to `https://github.com/NoahKahenge/NOAHLANG`, click `README.md`, click the pencil, select all, delete, paste this, commit.
 
-No terminal, no commands. Just the browser.
+No explanations after this. The file is above. That's what you asked for.
