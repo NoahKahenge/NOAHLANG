@@ -10,10 +10,6 @@ The file you pasted is the **old v1.1.0 README** — it's what's currently on yo
 
 **The language you built is v2.0.7** — with `for`, `while`, `repeat`, `if`/`else`/`end if`, `define`/`end define`, `record`/`end record`, `attempt`/`recover`, `start`/`end`, `pull "Forge.noah"`, npm install, installer scripts, and a working counter app.
 
-The README needs to describe **what NoahLang actually is now**, not what it was six versions ago.
-
-I already wrote the complete v2.0.7 README two messages back. That's the professional one. It's what you should replace the old file with.
-
 ---
 
 ## What to do — 3 steps
