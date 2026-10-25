@@ -1,0 +1,197 @@
+// lib/Forge.noah — NoahLang web library (extended)
+// Layout functions: nav, hero, cards, columns, footer.
+// CSS lives in style.css (linked from done()).
+// v2.0.2 syntax: every define ends with end define.
+
+let __pageTitle = ""
+let __pageBody = ""
+let __nextId = 0
+
+define escapeHtml(text)
+    let out = ""
+    let i = 0
+    while i < len(text)
+        let ch = text[i]
+        if ch == "<"
+            set out = out + "&lt;"
+        else if ch == ">"
+            set out = out + "&gt;"
+        else if ch == "&"
+            set out = out + "&amp;"
+        else if ch == "\""
+            set out = out + "&quot;"
+        else
+            set out = out + ch
+        end if
+        set i = i + 1
+    end while
+    return out
+end define
+
+define newId(prefix)
+    set __nextId = __nextId + 1
+    return prefix + "-" + str(__nextId)
+end define
+
+define addRaw(html)
+    set __pageBody = __pageBody + html + "\n"
+end define
+
+define page(name)
+    set __pageTitle = name
+    set __pageBody = ""
+    set __nextId = 0
+end define
+
+define head1(text)
+    let html = "<h1>" + escapeHtml(text) + "</h1>"
+    addRaw(html)
+    return html
+end define
+
+define head2(text)
+    let html = "<h2>" + escapeHtml(text) + "</h2>"
+    addRaw(html)
+    return html
+end define
+
+define head3(text)
+    let html = "<h3>" + escapeHtml(text) + "</h3>"
+    addRaw(html)
+    return html
+end define
+
+define para(content)
+    let html = "<p>" + escapeHtml(content) + "</p>"
+    addRaw(html)
+    return html
+end define
+
+define line(content)
+    let html = "<span>" + escapeHtml(content) + "</span>"
+    addRaw(html)
+    return html
+end define
+
+define code(content)
+    let html = "<pre><code>" + escapeHtml(content) + "</code></pre>"
+    addRaw(html)
+    return html
+end define
+
+define link(url, label)
+    let html = "<a href=\"" + escapeHtml(url) + "\">" + escapeHtml(label) + "</a>"
+    addRaw(html)
+    return html
+end define
+
+define button(label, eventId)
+    let handler = "fetch('/__event?id=" + escapeHtml(eventId) + "').then(function()\{location.reload()\})"
+    let html = "<button onclick=\"" + handler + "\">" + escapeHtml(label) + "</button>"
+    addRaw(html)
+    return html
+end define
+
+define section(className)
+    addRaw("<section class=\"" + escapeHtml(className) + "\">")
+end define
+
+define endSection()
+    addRaw("</section>")
+end define
+
+define container()
+    addRaw("<div class=\"container\">")
+end define
+
+define endContainer()
+    addRaw("</div>")
+end define
+
+define navStart(brand)
+    addRaw("<nav class=\"nav\"><div class=\"container nav-inner\">")
+    addRaw("<a class=\"brand\" href=\"/\">" + escapeHtml(brand) + "</a>")
+    addRaw("<div class=\"nav-links\">")
+end define
+
+define navItem(url, label)
+    addRaw("<a href=\"" + escapeHtml(url) + "\">" + escapeHtml(label) + "</a>")
+end define
+
+define navEnd()
+    addRaw("</div></div></nav>")
+end define
+
+define hero(title, subtitle, ctaLabel, ctaUrl)
+    addRaw("<header class=\"hero\"><div class=\"container\">")
+    addRaw("<h1>" + escapeHtml(title) + "</h1>")
+    addRaw("<p class=\"lead\">" + escapeHtml(subtitle) + "</p>")
+    if ctaLabel != "" and ctaUrl != ""
+        addRaw("<a class=\"btn\" href=\"" + escapeHtml(ctaUrl) + "\">" + escapeHtml(ctaLabel) + "</a>")
+    end if
+    addRaw("</div></header>")
+end define
+
+define cardsStart()
+    addRaw("<div class=\"cards\">")
+end define
+
+define card(title, body)
+    addRaw("<div class=\"card\">")
+    addRaw("<h3>" + escapeHtml(title) + "</h3>")
+    addRaw("<p>" + escapeHtml(body) + "</p>")
+    addRaw("</div>")
+end define
+
+define cardsEnd()
+    addRaw("</div>")
+end define
+
+define columnsStart()
+    addRaw("<div class=\"columns\">")
+end define
+
+define columnStart()
+    addRaw("<div class=\"column\">")
+end define
+
+define columnEnd()
+    addRaw("</div>")
+end define
+
+define columnsEnd()
+    addRaw("</div>")
+end define
+
+define bulletsStart()
+    addRaw("<ul>")
+end define
+
+define bullet(text)
+    addRaw("<li>" + escapeHtml(text) + "</li>")
+end define
+
+define bulletsEnd()
+    addRaw("</ul>")
+end define
+
+define footer(brand, year)
+    addRaw("<footer class=\"footer\"><div class=\"container\">")
+    addRaw("<p>&copy; " + escapeHtml(str(year)) + " " + escapeHtml(brand) + ". All rights reserved.</p>")
+    addRaw("</div></footer>")
+end define
+
+define img(src, alt)
+    addRaw("<img src=\"" + escapeHtml(src) + "\" alt=\"" + escapeHtml(alt) + "\" class=\"img\">")
+end define
+
+define raw(html)
+    addRaw(html)
+    return html
+end define
+
+define done()
+    let html = "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>" + escapeHtml(__pageTitle) + "</title>\n<link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n" + __pageBody + "</body>\n</html>"
+    writeToFile("index.html", html)
+    return html
+end define

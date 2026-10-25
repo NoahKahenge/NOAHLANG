@@ -1,0 +1,85 @@
+pull "Forge.noah"
+
+let buttonCount = 1
+
+define onAdd()
+    set buttonCount = buttonCount + 1
+    rebuild()
+end define
+
+define rebuild()
+    page("EasyInfo Innovations 4")
+
+    start navStart("EasyInfo Innovations 4")
+        navItem("#services", "Services")
+        navItem("#about", "About")
+        navItem("#contact", "Contact")
+        navItem("#buttons", "Try it")
+    end navStart
+
+    hero("Software that works for you", "We build small, reliable tools for everyday problems — for businesses, schools, and community organisations.", "Get in touch", "#contact")
+
+    start section("services")
+        start container()
+            head2("What we do")
+            start cardsStart()
+                card("Web development", "Small sites, internal tools, and dashboards. Fast, accessible, and easy to maintain.")
+                card("Data collection", "Offline-first forms for field work. Collect data anywhere, sync when connected.")
+                card("Training", "We teach your team to build and maintain their own tools. No dependence on us.")
+            end cardsStart
+        end container
+    end section
+
+    start section("about")
+        start container()
+            head2("About us")
+            start columnsStart()
+                start columnStart()
+                    para("EasyInfo Innovations 4 is a small software studio based in Zambia. We believe good software should be simple, affordable, and built to last.")
+                    para("We work with businesses, schools, clinics, and community organisations to build tools that solve real problems — not imagined ones.")
+                end columnStart
+                start columnStart()
+                    para("Our approach:")
+                    start bulletsStart()
+                        bullet("Start small — solve one problem well")
+                        bullet("Build for the people who'll actually use it")
+                        bullet("Document everything so you can maintain it")
+                        bullet("Keep costs low so it stays sustainable")
+                    end bulletsStart
+                end columnStart
+            end columnsStart
+        end container
+    end section
+
+    start section("buttons")
+        start container()
+            head2("Try it")
+            para("Click any button below to add another one. The counter is " + str(buttonCount) + ".")
+            raw("<div class=\"button-demo\">")
+            button("Create button", "add")
+            for i in 0..buttonCount
+                button("Duplicate me (" + str(i + 1) + ")", "dup-" + str(i))
+                bindEvent("dup-" + str(i), onAdd)
+            end for
+            raw("</div>")
+        end container
+    end section
+
+    start section("contact")
+        start container()
+            head2("Get in touch")
+            para("We'd love to hear about your project. Whether it's a small website or a tool to help your team work better, we can help.")
+            para("Email: hello@easyinfo.example")
+            link("https://example.com", "Visit our site")
+        end container
+    end section
+
+    footer("EasyInfo Innovations 4", 2026)
+
+    done()
+end define
+
+bindEvent("add", onAdd)
+
+rebuild()
+serve(3000)

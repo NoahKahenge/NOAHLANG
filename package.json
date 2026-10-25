@@ -1,0 +1,43 @@
+{
+  "name": "noahlang",
+  "version": "2.0.2",
+  "description": "A small, expressive programming language for building web pages, web apps, and CLI tools.",
+  "main": "noah.js",
+  "bin": {
+    "noah": "./noah.js"
+  },
+  "files": [
+    "noah.js",
+    "lib/Forge.noah",
+    "lib/style.css",
+    "scripts/postinstall.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "test": "node tests/run-tests.js"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "keywords": [
+    "noahlang",
+    "programming-language",
+    "interpreter",
+    "web",
+    "html",
+    "forge",
+    "zambia"
+  ],
+  "author": "Noah Kahenge",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NoahKahenge/noahlang-debugger.git"
+  },
+  "homepage": "https://github.com/NoahKahenge/noahlang-debugger",
+  "bugs": {
+    "url": "https://github.com/NoahKahenge/noahlang-debugger/issues"
+  }
+}

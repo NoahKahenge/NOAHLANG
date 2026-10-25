@@ -1,0 +1,61 @@
+// lib/web.noah
+// A tiny HTML builder for NoahLang.
+// Usage:
+//   pull "lib/web.noah"
+//   startPage("My Site")
+//   addHeading("Welcome")
+//   addParagraph("Hello, {name}!")
+//   finishPage()
+//   openInBrowser("index.html")
+
+// --- internal state ---
+let __pageTitle = ""
+let __pageBody = ""
+
+// --- helpers ---
+define escapeHtml(text):
+    let out = ""
+    let i = 0
+    while i < len(text):
+        let ch = text[i]
+        if ch == "<":
+            set out = out + "&lt;"
+        else if ch == ">":
+            set out = out + "&gt;"
+        else if ch == "&":
+            set out = out + "&amp;"
+        else if ch == "\"":
+            set out = out + "&quot;"
+        else:
+            set out = out + ch
+        set i = i + 1
+    return out
+
+define addRaw(html):
+    set __pageBody = __pageBody + html + "\n"
+
+// --- public API ---
+define startPage(title):
+    set __pageTitle = title
+    set __pageBody = ""
+
+define addHeading(text):
+    addRaw("<h1>" + escapeHtml(text) + "</h1>")
+
+define addParagraph(text):
+    addRaw("<p>" + escapeHtml(text) + "</p>")
+
+define addLink(url, label):
+    addRaw("<a href=\"" + escapeHtml(url) + "\">" + escapeHtml(label) + "</a>")
+
+define addButton(label, onClick):
+    // onClick is a JavaScript string for now (no event system in NoahLang yet)
+    addRaw("<button onclick=\"" + escapeHtml(onClick) + "\">" + escapeHtml(label) + "</button>")
+
+define addHtml(raw):
+    addRaw(raw)
+
+define finishPage():
+    let html = "<!doctype html>\n<html>\n<head>\n<meta charset=\"utf-8\">\n<title>" + escapeHtml(__pageTitle) + "</title>\n<style>body{font-family:system-ui,sans-serif;max-width:720px;margin:40px auto;padding:0 20px;line-height:1.6;}h1{color:#1a1a1a;}button{padding:8px 16px;font-size:1em;cursor:pointer;}</style>\n</head>\n<body>\n" + __pageBody + "</body>\n</html>"
+    writeToFile("index.html", html)
+    return html
